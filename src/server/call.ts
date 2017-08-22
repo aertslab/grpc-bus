@@ -20,7 +20,8 @@ export class Call {
                      private clientId: number,
                      private clientServiceId: number,
                      private callInfo: IGBCallInfo,
-                     private send: (msg: IGBServerMessage) => void) {
+                     private send: (msg: IGBServerMessage) => void,
+                     private grpc: any) {
   }
 
   public initCall() {
@@ -61,7 +62,10 @@ export class Call {
                         ' requires an argument object of type ' +
                         rpcMeta.requestName + '.');
       }
-      this.service.stub[camelMethod](args, (error: any, response: any) => {
+
+      let dummyMeta = new this.grpc.Metadata();
+      dummyMeta.add('whoami', 'thewalrus');
+      this.service.stub[camelMethod](args, dummyMeta, (error: any, response: any) => {
         this.handleCallCallback(error, response);
       });
     }
