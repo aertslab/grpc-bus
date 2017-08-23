@@ -28,7 +28,6 @@ export class Call {
     if (!this.callInfo || !this.callInfo.method_id) {
       throw new Error('Call info, method ID must be given');
     }
-    console.log("in server call initCall(), callInfo:", this.callInfo);
     let args: any = this.callInfo.bin_argument;
     let rpcMeta = this.service.lookupMethod(this.callInfo.method_id);
     if (!rpcMeta) {
@@ -63,25 +62,15 @@ export class Call {
                         ' requires an argument object of type ' +
                         rpcMeta.requestName + '.');
       }
-      /*
-      let dummyMeta = new this.grpc.Metadata();
-      dummyMeta.add('whoami', 'thewalrus');
-      dummyMeta.add('whoami', 'googoogajoob');
-        */
-        console.log("GBSERVER.call.initCall() ... going to construct metadata from callinfo:", this.callInfo);
-        console.log("metadata:", this.callInfo.metadata.map);
       let metadata = new this.grpc.Metadata();
       for(let key in this.callInfo.metadata.map) {
-        console.log("I have key:", key);
         let metadataValues = this.callInfo.metadata.map[key].value.values;
-        console.log("GBSERVER.call.initcall() metadata values:", metadataValues);
         if (metadataValues) {
           for(let i=0; i < metadataValues.length; i++) {
             metadata.add(key, metadataValues[i]);
           }
         }
       }
-      console.log("GBSERVER.call.initCall() ... constructed metadata:", metadata);
       this.service.stub[camelMethod](args, metadata, (error: any, response: any) => {
         this.handleCallCallback(error, response);
       });

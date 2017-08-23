@@ -151,7 +151,6 @@ export class Service {
     this.handle[methodName] = (argument?: any,
                                metadata?: any,
                                callback?: (error?: any, response?: any) => void) => {
-      console.log("GBClient.service.buildStubMethod ... in handler", argument, metadata, callback);
       if (typeof argument === 'function' && !callback && !metadata) {
         callback = argument;
         argument = undefined;
@@ -170,13 +169,11 @@ export class Service {
     if (argument) {
       args = requestBuilder.encode(argument);
     }
-    //SJ: define GBCallInfo here in client.service.startCall() ... this seems to be for non streaming calls
     let info: IGBCallInfo = {
       method_id: methodMeta.name,
       bin_argument: args,
       metadata: metadata,
     };
-    console.log("GBCLIENT: constructed IGBCallInfo:", info);
     if (methodMeta.requestStream && argument) {
       throw new Error('Argument should not be specified for a request stream.');
     }

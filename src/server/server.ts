@@ -28,7 +28,6 @@ export class Server {
   }
 
   public handleMessage(message: IGBClientMessage) {
-    console.log("in GB server handleMessage()", message);
     if (message.service_create) {
       this.handleServiceCreate(message.service_create);
     }
@@ -75,7 +74,6 @@ export class Server {
   }
 
   private handleServiceCreate(msg: IGBCreateService) {
-    console.log("in handleServiceCreate", msg);
     let serviceId = msg.service_id;
     let result: IGBCreateServiceResult = {
       service_id: msg.service_id,
@@ -97,7 +95,6 @@ export class Server {
         this.clientIdToService[serviceId] = new CallStore(serv, msg.service_id, this.send, this.grpc);
       } catch (e) {
         result.result = 2;
-        console.log("error creating service:", e.toString());
         result.error_details = e.toString();
       }
     }
@@ -121,7 +118,6 @@ export class Server {
   }
 
   private handleCallCreate(msg: IGBCreateCall) {
-    console.log("handling call create:", msg);
     let svc = this.clientIdToService[msg.service_id];
     if (!svc) {
       this.send({
@@ -134,7 +130,6 @@ export class Server {
       });
       return;
     }
-    console.log("svc.initCall");
     svc.initCall(msg);
   }
 
