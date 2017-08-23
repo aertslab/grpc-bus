@@ -64,6 +64,8 @@ export class Call {
       }
       let metadata = new this.grpc.Metadata();
       for(let key in this.callInfo.metadata.map) {
+        // metadata is decoded into a funny structure, but we can access 
+        // what we need under the '.map' field
         let metadataValues = this.callInfo.metadata.map[key].value.values;
         if (metadataValues) {
           for(let i=0; i < metadataValues.length; i++) {
