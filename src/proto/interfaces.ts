@@ -28,9 +28,14 @@ export interface IGBReleaseService {
   service_id?: number;
 }
 
+export interface IGBMetadataValues {
+  values: string[];
+}
+
 export interface IGBCallInfo {
   method_id?: string;
   bin_argument?: any;
+  metadata: { [key: string]: IGBMetadataValues };
 }
 
 export interface IGBCreateCall {

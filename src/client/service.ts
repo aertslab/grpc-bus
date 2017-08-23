@@ -149,17 +149,20 @@ export class Service {
     // lowercase first letter
     let methodName = methodMeta.name.charAt(0).toLowerCase() + methodMeta.name.slice(1);
     this.handle[methodName] = (argument?: any,
+                               metadata?: any,
                                callback?: (error?: any, response?: any) => void) => {
-      if (typeof argument === 'function' && !callback) {
+      console.log("GBClient.service.buildStubMethod ... in handler", argument, metadata, callback);
+      if (typeof argument === 'function' && !callback && !metadata) {
         callback = argument;
         argument = undefined;
       }
-      return this.startCall(methodMeta, argument, callback);
+      return this.startCall(methodMeta, argument, metadata, callback);
     };
   }
 
   private startCall(methodMeta: any,
                     argument?: any,
+                    metadata?: any,
                     callback?: (error?: any, response?: any) => void): ICallHandle {
     let callId = this.callIdCounter++;
     let args: any;
@@ -167,10 +170,13 @@ export class Service {
     if (argument) {
       args = requestBuilder.encode(argument);
     }
+    //SJ: define GBCallInfo here in client.service.startCall() ... this seems to be for non streaming calls
     let info: IGBCallInfo = {
       method_id: methodMeta.name,
       bin_argument: args,
+      metadata: metadata,
     };
+    console.log("GBCLIENT: constructed IGBCallInfo:", info);
     if (methodMeta.requestStream && argument) {
       throw new Error('Argument should not be specified for a request stream.');
     }
@@ -183,7 +189,7 @@ export class Service {
     if (!methodMeta.responseStream && !callback) {
       throw new Error('Callback should be specified for a non-streaming response.');
     }
-    let call = new Call(callId, this.clientId, info, methodMeta, callback, this.send);
+    let call = new Call(callId, this.clientId, info, methodMeta, metadata, callback, this.send);
     this.calls[callId] = call;
     call.disposed.subscribe(() => {
       delete this.calls[callId];

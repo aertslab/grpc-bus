@@ -24,6 +24,7 @@ export class CallStore {
       service_id: msg.service_id,
       result: 0,
     };
+    console.log("in server call_store initCall", msg);
     if (typeof msg.call_id !== 'number' || this.calls[msg.call_id]) {
       // todo: fix enums
       result.result = 1;
@@ -31,7 +32,9 @@ export class CallStore {
     } else {
       try {
         let callId = msg.call_id;
+        console.log("in server call_store ... creating call");
         let call = new Call(this.service, msg.call_id, msg.service_id, msg.info, this.send, this.grpc);
+        console.log("in server call_store ... created call");
         call.initCall();
         this.calls[msg.call_id] = call;
         call.disposed.subscribe(() => {
