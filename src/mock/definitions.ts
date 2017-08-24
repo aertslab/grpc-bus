@@ -7,6 +7,7 @@ export const PROTO_DEFINITIONS = {
     "messages": [
         {
             "name": "HelloRequest",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -14,11 +15,11 @@ export const PROTO_DEFINITIONS = {
                     "name": "name",
                     "id": 1
                 }
-            ],
-            "syntax": "proto3"
+            ]
         },
         {
             "name": "HelloReply",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -26,20 +27,19 @@ export const PROTO_DEFINITIONS = {
                     "name": "message",
                     "id": 1
                 }
-            ],
-            "syntax": "proto3"
+            ]
         }
     ],
     "enums": [
         {
             "name": "EDummyEnum",
+            "syntax": "proto3",
             "values": [
                 {
                     "name": "DUMMY",
                     "id": 0
                 }
-            ],
-            "syntax": "proto3"
+            ]
         }
     ],
     "services": [

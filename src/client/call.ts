@@ -35,6 +35,7 @@ export class Call implements ICallHandle {
               public clientServiceId: number,
               private info: IGBCallInfo,
               private callMeta: any,
+              private metadata: any,
               private callback: (error?: any, response?: any) => void,
               private send: (message: IGBClientMessage) => void) {
     this.requestBuilder = callMeta.resolvedRequestType.build();

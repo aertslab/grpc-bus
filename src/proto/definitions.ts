@@ -7,6 +7,7 @@ export const PROTO_DEFINITIONS = {
     "messages": [
         {
             "name": "GBClientMessage",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -38,11 +39,11 @@ export const PROTO_DEFINITIONS = {
                     "name": "call_send",
                     "id": 5
                 }
-            ],
-            "syntax": "proto3"
+            ]
         },
         {
             "name": "GBServerMessage",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -74,11 +75,11 @@ export const PROTO_DEFINITIONS = {
                     "name": "call_ended",
                     "id": 5
                 }
-            ],
-            "syntax": "proto3"
+            ]
         },
         {
             "name": "GBServiceInfo",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -92,11 +93,11 @@ export const PROTO_DEFINITIONS = {
                     "name": "service_id",
                     "id": 2
                 }
-            ],
-            "syntax": "proto3"
+            ]
         },
         {
             "name": "GBCreateService",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -110,11 +111,11 @@ export const PROTO_DEFINITIONS = {
                     "name": "service_info",
                     "id": 2
                 }
-            ],
-            "syntax": "proto3"
+            ]
         },
         {
             "name": "GBReleaseService",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -122,11 +123,23 @@ export const PROTO_DEFINITIONS = {
                     "name": "service_id",
                     "id": 1
                 }
-            ],
-            "syntax": "proto3"
+            ]
+        },
+        {
+            "name": "GBMetadataValues",
+            "syntax": "proto3",
+            "fields": [
+                {
+                    "rule": "repeated",
+                    "type": "string",
+                    "name": "values",
+                    "id": 1
+                }
+            ]
         },
         {
             "name": "GBCallInfo",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -139,12 +152,19 @@ export const PROTO_DEFINITIONS = {
                     "type": "bytes",
                     "name": "bin_argument",
                     "id": 2
+                },
+                {
+                    "rule": "map",
+                    "type": "GBMetadataValues",
+                    "keytype": "string",
+                    "name": "metadata",
+                    "id": 3
                 }
-            ],
-            "syntax": "proto3"
+            ]
         },
         {
             "name": "GBCreateCall",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -164,11 +184,11 @@ export const PROTO_DEFINITIONS = {
                     "name": "info",
                     "id": 3
                 }
-            ],
-            "syntax": "proto3"
+            ]
         },
         {
             "name": "GBCallEnded",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -182,11 +202,11 @@ export const PROTO_DEFINITIONS = {
                     "name": "service_id",
                     "id": 2
                 }
-            ],
-            "syntax": "proto3"
+            ]
         },
         {
             "name": "GBEndCall",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -200,11 +220,11 @@ export const PROTO_DEFINITIONS = {
                     "name": "service_id",
                     "id": 2
                 }
-            ],
-            "syntax": "proto3"
+            ]
         },
         {
             "name": "GBSendCall",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -230,11 +250,11 @@ export const PROTO_DEFINITIONS = {
                     "name": "is_end",
                     "id": 4
                 }
-            ],
-            "syntax": "proto3"
+            ]
         },
         {
             "name": "GBCreateServiceResult",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -255,10 +275,10 @@ export const PROTO_DEFINITIONS = {
                     "id": 3
                 }
             ],
-            "syntax": "proto3",
             "enums": [
                 {
                     "name": "ECreateServiceResult",
+                    "syntax": "proto3",
                     "values": [
                         {
                             "name": "SUCCESS",
@@ -272,13 +292,13 @@ export const PROTO_DEFINITIONS = {
                             "name": "GRPC_ERROR",
                             "id": 2
                         }
-                    ],
-                    "syntax": "proto3"
+                    ]
                 }
             ]
         },
         {
             "name": "GBReleaseServiceResult",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -286,11 +306,11 @@ export const PROTO_DEFINITIONS = {
                     "name": "service_id",
                     "id": 1
                 }
-            ],
-            "syntax": "proto3"
+            ]
         },
         {
             "name": "GBCreateCallResult",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -317,10 +337,10 @@ export const PROTO_DEFINITIONS = {
                     "id": 3
                 }
             ],
-            "syntax": "proto3",
             "enums": [
                 {
                     "name": "ECreateCallResult",
+                    "syntax": "proto3",
                     "values": [
                         {
                             "name": "SUCCESS",
@@ -334,13 +354,13 @@ export const PROTO_DEFINITIONS = {
                             "name": "GRPC_ERROR",
                             "id": 2
                         }
-                    ],
-                    "syntax": "proto3"
+                    ]
                 }
             ]
         },
         {
             "name": "GBCallEvent",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -372,11 +392,11 @@ export const PROTO_DEFINITIONS = {
                     "name": "bin_data",
                     "id": 5
                 }
-            ],
-            "syntax": "proto3"
+            ]
         },
         {
             "name": "GBCallEnd",
+            "syntax": "proto3",
             "fields": [
                 {
                     "rule": "optional",
@@ -390,8 +410,7 @@ export const PROTO_DEFINITIONS = {
                     "name": "service_id",
                     "id": 2
                 }
-            ],
-            "syntax": "proto3"
+            ]
         }
     ],
     "isNamespace": true

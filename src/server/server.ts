@@ -92,7 +92,7 @@ export class Server {
         serv.disposed.subscribe(() => {
           this.releaseLocalService(serviceId, false);
         });
-        this.clientIdToService[serviceId] = new CallStore(serv, msg.service_id, this.send);
+        this.clientIdToService[serviceId] = new CallStore(serv, msg.service_id, this.send, this.grpc);
       } catch (e) {
         result.result = 2;
         result.error_details = e.toString();

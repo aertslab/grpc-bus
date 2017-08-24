@@ -14,7 +14,8 @@ export class CallStore {
 
   public constructor(private service: Service,
                      private clientId: number,
-                     private send: (msg: IGBServerMessage) => void) {
+                     private send: (msg: IGBServerMessage) => void,
+                     private grpc: any) {
   }
 
   public initCall(msg: IGBCreateCall) {
@@ -30,7 +31,7 @@ export class CallStore {
     } else {
       try {
         let callId = msg.call_id;
-        let call = new Call(this.service, msg.call_id, msg.service_id, msg.info, this.send);
+        let call = new Call(this.service, msg.call_id, msg.service_id, msg.info, this.send, this.grpc);
         call.initCall();
         this.calls[msg.call_id] = call;
         call.disposed.subscribe(() => {
