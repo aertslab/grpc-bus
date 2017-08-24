@@ -36,9 +36,7 @@ export class Call {
         // what we need under the '.map' field
         let metadataValues = this.callInfo.metadata.map[key].value.values;
         if (metadataValues) {
-          for(let i=0; i < metadataValues.length; i++) {
-            metadata.add(key, metadataValues[i]);
-          }
+          metadataValues.forEach( (value: string)=> metadata.add(key, value));
         }
       }
     }
