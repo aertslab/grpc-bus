@@ -29,6 +29,19 @@ export class Call {
       throw new Error('Call info, method ID must be given');
     }
     let args: any = this.callInfo.bin_argument;
+    let metadata = new this.grpc.Metadata();
+    if (this.callInfo.metadata) {
+      for(let key in this.callInfo.metadata.map) {
+        // metadata is decoded into a funny structure, but we can access 
+        // what we need under the '.map' field
+        let metadataValues = this.callInfo.metadata.map[key].value.values;
+        if (metadataValues) {
+          for(let i=0; i < metadataValues.length; i++) {
+            metadata.add(key, metadataValues[i]);
+          }
+        }
+      }
+    }
     let rpcMeta = this.service.lookupMethod(this.callInfo.method_id);
     if (!rpcMeta) {
       throw new Error('Method ' + this.callInfo.method_id + ' not found.');
@@ -53,7 +66,7 @@ export class Call {
       this.streamHandle = this.service.stub[camelMethod]();
       this.setCallHandlers(this.streamHandle);
     } else if (!rpcMeta.requestStream && rpcMeta.responseStream) {
-      this.streamHandle = this.service.stub[camelMethod](args);
+      this.streamHandle = this.service.stub[camelMethod](args, metadata);
       this.setCallHandlers(this.streamHandle);
     } else if (!rpcMeta.requestStream && !rpcMeta.responseStream) {
       if (!args) {
@@ -61,17 +74,6 @@ export class Call {
                         this.callInfo.method_id +
                         ' requires an argument object of type ' +
                         rpcMeta.requestName + '.');
-      }
-      let metadata = new this.grpc.Metadata();
-      for(let key in this.callInfo.metadata.map) {
-        // metadata is decoded into a funny structure, but we can access 
-        // what we need under the '.map' field
-        let metadataValues = this.callInfo.metadata.map[key].value.values;
-        if (metadataValues) {
-          for(let i=0; i < metadataValues.length; i++) {
-            metadata.add(key, metadataValues[i]);
-          }
-        }
       }
       this.service.stub[camelMethod](args, metadata, (error: any, response: any) => {
         this.handleCallCallback(error, response);
