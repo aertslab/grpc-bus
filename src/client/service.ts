@@ -155,6 +155,10 @@ export class Service {
         callback = argument;
         argument = undefined;
       }
+      if (typeof metadata === 'function' && !callback) {
+        callback = metadata;
+        metadata = undefined;
+      }
       return this.startCall(methodMeta, argument, metadata, callback);
     };
   }
