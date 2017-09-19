@@ -57,11 +57,11 @@ export class Call {
       throw new Error('Method ' + camelMethod + ' not defined by grpc.');
     }
     if (rpcMeta.requestStream && !rpcMeta.responseStream) {
-      this.streamHandle = this.service.stub[camelMethod]((error: any, response: any) => {
+      this.streamHandle = this.service.stub[camelMethod](metadata, (error: any, response: any) => {
         this.handleCallCallback(error, response);
       });
     } else if (rpcMeta.requestStream && rpcMeta.responseStream) {
-      this.streamHandle = this.service.stub[camelMethod]();
+      this.streamHandle = this.service.stub[camelMethod](metadata);
       this.setCallHandlers(this.streamHandle);
     } else if (!rpcMeta.requestStream && rpcMeta.responseStream) {
       this.streamHandle = this.service.stub[camelMethod](args, metadata);
