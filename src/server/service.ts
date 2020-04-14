@@ -22,10 +22,10 @@ export class Service {
   private clientIds: number[];
 
   constructor(private protoTree: any,
-              clientId: number,
-              info: IGBServiceInfo,
-              // Pass require('grpc') as an argument.
-              private grpc: any) {
+    clientId: number,
+    info: IGBServiceInfo,
+    // Pass require('grpc') as an argument.
+    private grpc: any) {
     this.clientIds = [clientId];
     this.info = info;
   }
@@ -39,7 +39,11 @@ export class Service {
       throw new TypeError(this.info.service_id + ' is a ' + serv.className + ' not a Service.');
     }
     let stubctr = loadObject(this.grpc, serv);
-    this.stub = new stubctr(this.info.endpoint, this.grpc.credentials.createInsecure());
+    let options = {
+      "grpc.max_receive_message_length": -1,
+      "grpc.max_send_message_length": -1
+    };
+    this.stub = new stubctr(this.info.endpoint, this.grpc.credentials.createInsecure(), options);
     this.serviceTree = serv;
   }
 
